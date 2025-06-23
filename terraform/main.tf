@@ -1,13 +1,21 @@
+variable "google_credentials" {
+  description = "Base64 encoded GCP service account JSON"
+  type        = string
+  sensitive   = true
+}
+
+provider "google" {
+  project     = "silver-impulse-462505-s4"
+  region      = "asia-east1"
+  zone        = "asia-east1-c"
+  credentials = base64decode(var.google_credentials)
+}
+
 resource "google_compute_instance_template" "docker_nginx" {
   name         = "instance-template-docker-nginx-terraform"
   region       = "asia-east1"
   machine_type = "e2-medium"
   tags         = ["http-server", "https-server", "lb-health-check"]
-
-  service_account {
-    email  = "904029023371-compute@developer.gserviceaccount.com"
-    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
-  }
 
   disk {
     source_image = "cos-stable" # 自動產生的 COS 映像，Terraform 中直接指定 family 即可
