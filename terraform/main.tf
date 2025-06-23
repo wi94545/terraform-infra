@@ -18,7 +18,7 @@ resource "google_compute_instance_template" "docker_nginx" {
   tags         = ["http-server", "https-server", "lb-health-check"]
 
   disk {
-    source_image = "cos-stable" # 自動產生的 COS 映像，Terraform 中直接指定 family 即可
+    source_image = "projects/cos-cloud/global/images/cos-stable-121-18867-90-62" # 自動產生的 COS 映像，Terraform 中直接指定 family 即可
     auto_delete  = true
     boot         = true
     type         = "pd-balanced"
@@ -55,10 +55,6 @@ EOF
     enable_secure_boot          = false
     enable_vtpm                 = true
     enable_integrity_monitoring = true
-  }
-
-  labels = {
-    "container-vm" = "cos-stable"
   }
 
   lifecycle {
