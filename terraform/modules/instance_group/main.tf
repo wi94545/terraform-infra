@@ -33,11 +33,12 @@ resource "google_compute_region_instance_group_manager" "mig" {
   }
 }
 
-resource "google_compute_autoscaler" "as" {
+resource "google_compute_region_autoscaler" "as" {
   name   = "autoscaler-${var.group_name}"
   region = var.region
   target = google_compute_region_instance_group_manager.mig.self_link
 
+  depends_on = [google_compute_region_instance_group_manager.mig]  # 等待mig創好
   autoscaling_policy {
     min_replicas    = var.min_replicas
     max_replicas    = var.max_replicas
