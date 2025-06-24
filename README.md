@@ -43,9 +43,6 @@ module "template_nginx" {
 🔧 操作步驟
 在 main.tf 裡新增群組模組呼叫，並將剛剛範本的 self_link 傳入：
 
-hcl
-複製
-編輯
 module "group_nginx" {
   source           = "./modules/instance_group"
   group_name       = "nginx"
