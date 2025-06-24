@@ -31,13 +31,6 @@ resource "google_compute_region_instance_group_manager" "mig" {
     name = "http"
     port = 80
   }
-
-  update_strategy = "ROLLING_UPDATE"
-
-  rolling_update_policy {
-    max_surge       = 1
-    max_unavailable = 0
-  }
 }
 
 resource "google_compute_autoscaler" "as" {
