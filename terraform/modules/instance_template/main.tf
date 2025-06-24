@@ -30,10 +30,10 @@ EOF
   }
 
   # Service Account
-  #service_account {
-   # email  = "904029023371-compute@developer.gserviceaccount.com"
-   # scopes = ["cloud-platform"]
- # }
+  service_account {
+    email  = "904029023371-compute@developer.gserviceaccount.com"
+    scopes = ["cloud-platform"]
+  }
 
   scheduling {
     automatic_restart   = true
