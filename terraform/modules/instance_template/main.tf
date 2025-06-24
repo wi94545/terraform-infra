@@ -14,7 +14,7 @@ resource "google_compute_instance_template" "template" {
   network_interface {
     network    = var.network
     subnetwork = var.subnetwork
-    access_config {}
+    # access_config {} 臨時外網ＩＰ
   }
 
   metadata = {
