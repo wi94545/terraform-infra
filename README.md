@@ -5,18 +5,18 @@
 
 ## 🗂 架構總覽
 
-├── main.tf # 主要呼叫模組與設定參數
-├── variables.tf # 變數定義 (project_id, region, zone, google_credentials)
-├── provider.tf # GCP provider 設定
-└── modules/
-├── instance_template/ # 執行個體範本模組（Instance Template）
-│ ├── main.tf
-│ ├── variables.tf
-│ └── outputs.tf
-└── instance_group/ # 執行個體群組模組（Managed Instance Group）
-├── main.tf
-├── variables.tf
-└── outputs.tf
+📁 modules/
+  📁 instance_template/
+    📄 main.tf
+    📄 variables.tf
+    📄 outputs.tf
+  📁 instance_group/
+    📄 main.tf
+    📄 variables.tf
+    📄 outputs.tf
+📄 main.tf
+📄 variables.tf
+📄 provider.tf
 
 yaml
 ---
