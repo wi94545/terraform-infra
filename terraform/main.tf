@@ -1,11 +1,11 @@
-#憑證
+# 憑證
 variable "google_credentials" {
   description = "Base64 encoded GCP service account JSON"
   type        = string
   sensitive   = true
 }
 
-＃連入google
+# 連入google
 provider "google" {
   project     = "silver-impulse-462505-s4"
   region      = "asia-east1"
