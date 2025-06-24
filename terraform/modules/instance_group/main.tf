@@ -35,6 +35,7 @@ resource "google_compute_region_instance_group_manager" "mig" {
 
 resource "google_compute_autoscaler" "as" {
   name   = "autoscaler-${var.group_name}"
+  region = var.region
   target = google_compute_region_instance_group_manager.mig.self_link
 
   autoscaling_policy {
