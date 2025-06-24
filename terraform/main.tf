@@ -18,7 +18,7 @@ module "template_nginx" {
   source          = "./modules/instance_template"
   group_name      = "nginx"
   container_name  = "custom-nginx"
-  container_image = "asia-east1-docker.pkg.dev/silver-impulse-462505-s4/joe-repo/custom-nginx:latest"
+  container_image = "asia-east1-docker.pkg.dev/silver-impulse-462505-s4/joe-repo/custom-nginx:1.0"
   network         = "joe-vpc-1"
   subnetwork      = "joe-test2"
   region          = var.region
