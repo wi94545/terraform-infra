@@ -4,7 +4,7 @@
 ---
 
 ## 🗂 架構總覽
-
+```
 📁 modules/
   📁 instance_template/
     📄 main.tf
@@ -17,7 +17,7 @@
 📄 main.tf
 📄 variables.tf
 📄 provider.tf
-
+```
 yaml
 ---
 
