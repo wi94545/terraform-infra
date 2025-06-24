@@ -4,4 +4,3 @@ variable "container_image" {}
 variable "network" {}
 variable "subnetwork" {}
 variable "region" {}
-variable "zone" {}
