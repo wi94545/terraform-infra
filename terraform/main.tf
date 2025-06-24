@@ -1,64 +1,50 @@
+# 變數定義
 variable "google_credentials" {
   description = "Base64 encoded GCP service account JSON"
   type        = string
   sensitive   = true
 }
 
+variable "project_id" {
+  default = "silver-impulse-462505-s4"
+}
+
+variable "region" {
+  default = "asia-east1"
+}
+
+variable "zone" {
+  default = "asia-east1-c"
+}
+
+# Provider 設定
 provider "google" {
-  project     = "silver-impulse-462505-s4"
-  region      = "asia-east1"
-  zone        = "asia-east1-c"
+  project     = var.project_id
+  region      = var.region
+  zone        = var.zone
   credentials = base64decode(var.google_credentials)
 }
 
-resource "google_compute_instance_template" "docker_nginx" {
-  name         = "instance-template-docker-nginx-terraform"
-  region       = "asia-east1"
-  machine_type = "e2-medium"
-  tags         = ["http-server", "https-server", "lb-health-check"]
+# 呼叫 instance_template 模組
+module "template_nginx" {
+  source          = "./modules/instance_template"
+  group_name      = "nginx"
+  container_name  = "custom-nginx"
+  container_image = "asia-east1-docker.pkg.dev/silver-impulse-462505-s4/joe-repo/custom-nginx:latest"
+  network         = "joe-vpc-1"
+  subnetwork      = "joe-test2"
+  region          = var.region
+  zone            = var.zone
+}
 
-  disk {
-    source_image = "projects/cos-cloud/global/images/cos-stable-121-18867-90-62" # 自動產生的 COS 映像，Terraform 中直接指定 family 即可
-    auto_delete  = true
-    boot         = true
-    type         = "pd-balanced"
-    disk_size_gb = 30
-  }
-
-  network_interface {
-    network    = "joe-vpc-1"
-    subnetwork = "joe-test2"
-    access_config {} # 無外部 IP：這樣配置會給一個 ephemeral IP，若要無外部 IP，請刪除這行
-  }
-
-  metadata = {
-    gce-container-declaration = <<EOF
-spec:
-  containers:
-    - name: custom-nginx
-      image: asia-east1-docker.pkg.dev/silver-impulse-462505-s4/joe-repo/custom-nginx:latest
-      stdin: false
-      tty: false
-  restartPolicy: Always
-EOF
-  }
-
-  metadata_startup_script = "echo Hello from startup script"
-
-  scheduling {
-    automatic_restart   = true
-    on_host_maintenance = "MIGRATE"
-    preemptible         = false
-  }
-
-  shielded_instance_config {
-    enable_secure_boot          = false
-    enable_vtpm                 = true
-    enable_integrity_monitoring = true
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
+# 呼叫 instance_group 模組
+module "group_nginx" {
+  source           = "./modules/instance_group"
+  group_name       = "nginx"
+  region           = var.region
+  instance_count   = 4
+  min_replicas     = 4
+  max_replicas     = 6
+  instance_template = module.template_nginx.instance_template_self_link
 }
 
