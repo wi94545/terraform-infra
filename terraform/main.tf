@@ -22,7 +22,6 @@ module "template_nginx" {
   network         = "joe-vpc-1"
   subnetwork      = "joe-test2"
   region          = var.region
-  zone            = var.zone
 }
 
 # 呼叫 instance_group 模組
