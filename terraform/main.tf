@@ -1,27 +1,15 @@
-# 變數定義
+#憑證
 variable "google_credentials" {
   description = "Base64 encoded GCP service account JSON"
   type        = string
   sensitive   = true
 }
 
-variable "project_id" {
-  default = "silver-impulse-462505-s4"
-}
-
-variable "region" {
-  default = "asia-east1"
-}
-
-variable "zone" {
-  default = "asia-east1-c"
-}
-
-# Provider 設定
+＃連入google
 provider "google" {
-  project     = var.project_id
-  region      = var.region
-  zone        = var.zone
+  project     = "silver-impulse-462505-s4"
+  region      = "asia-east1"
+  zone        = "asia-east1-c"
   credentials = base64decode(var.google_credentials)
 }
 
