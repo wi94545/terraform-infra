@@ -34,4 +34,3 @@ module "group_nginx" {
   max_replicas     = 6
   instance_template = module.template_nginx.instance_template_self_link
 }
-
